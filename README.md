@@ -1,0 +1,6 @@
+Dotfiles
+========
+
+```sh
+$ make install
+```

@@ -1,0 +1,7 @@
+[user]
+	email = kohei_kubota@voyagegroup.com
+	name = 9bt
+[core]
+	quotepath = false
+	excludesfile = ~/.gitignore
+	editor = /usr/bin/vim
