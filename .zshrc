@@ -46,11 +46,11 @@ bindkey '^]' peco-src
 # Node.js
 # -------------------------------------
 
-if [[ -d "$HOME/.ndenv" ]]
+if [[ -d "$HOME/.nvm" ]]
 then
-  export NDENV_ROOT="$HOME/.ndenv"
-  export PATH="$NDENV_ROOT/bin:$PATH"
-  eval "$(ndenv init -)"
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
 
 # -------------------------------------
