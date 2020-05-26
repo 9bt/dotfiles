@@ -4,6 +4,9 @@ alias ls="ls -G"
 alias tree="tree -NC"
 alias grep="grep --color -n -I --exclude='*.svn-*' --exclude='entries' --exclude='*/cache/*'"
 
+alias python="python3"
+alias pip="pip3"
+
 setopt correct ## 入力しているコマンド名が間違っている場合にもしかして：を出す
 setopt nobeep ## ビープを鳴らさない
 setopt prompt_subst ## 色を使う
@@ -28,6 +31,17 @@ zle -N cdup
 bindkey '^K' cdup
 bindkey "^R" history-incremental-search-backward
 
+function peco-src () {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^]' peco-src
+
 # -------------------------------------
 # Node.js
 # -------------------------------------
@@ -40,6 +54,17 @@ then
 fi
 
 # -------------------------------------
+# Python
+# -------------------------------------
+
+if [[ -d "$HOME/.pyenv" ]]
+then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
+
+# -------------------------------------
 # Golang
 # -------------------------------------
 
@@ -47,12 +72,13 @@ if [[ -d "$HOME/.goenv" ]]
 then
   export GOENV_ROOT="$HOME/.goenv"
   export PATH="$GOENV_ROOT/bin:$PATH"
+  export GOENV_DISABLE_GOPATH=1
   eval "$(goenv init -)"
 fi
 
-if [[ -d "${HOME}/.go" ]]
+if [[ -d "$HOME/dev" ]]
 then
-  export GOPATH="$HOME/.go"
+  export GOPATH="$HOME/dev"
   export PATH="$PATH:$GOPATH/bin"
 fi
 
@@ -97,6 +123,7 @@ zplugin light zsh-users/zsh-syntax-highlighting
 POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
+POWERLEVEL9K_STATUS_HIDE_SIGNAME=true
 
 ZPLGM[MUTE_WARNINGS]=1
 
