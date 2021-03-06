@@ -1,10 +1,9 @@
 [user]
 	email = kohei_kubota@voyagegroup.com
-	name = 9bt
+	name = Kohei Kubota
 [core]
 	quotepath = false
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/kouheikbt/.gitignore
 	editor = /usr/bin/vim
 [ghq]
-	root = /Users/kouheikbt/dev/src/github.com/voyagegroup
-	root = /Users/kouheikbt/dev/src/github.com/9bt
+	root = /Users/kouheikbt/dev/src
