@@ -111,24 +111,42 @@ fi
 # Zplugin
 # -------------------------------------
 
-source $HOME/.zplugin/bin/zplugin.zsh
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
+## Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
 
-zcompile $HOME/.zplugin/bin/zplugin.zsh
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-zplugin light zsh-users/zsh-autosuggestions
-zplugin light zsh-users/zsh-syntax-highlighting
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/z-a-patch-dl \
+    zdharma-continuum/z-a-as-monitor \
+    zdharma-continuum/z-a-bin-gem-node
+## End of Zinit's installer chunk
+
+source $HOME/.zinit/bin/zinit.zsh
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
 
 POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
 POWERLEVEL9K_STATUS_HIDE_SIGNAME=true
 
-ZPLGM[MUTE_WARNINGS]=1
-
-zplugin ice from"gh"
-zplugin load bhilburn/powerlevel9k
+zinit ice from"gh"
+zinit load bhilburn/powerlevel9k
 
 ## Local dependency
 if [ -f ~/.zshrc.local ]
